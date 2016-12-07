@@ -2,7 +2,7 @@ images={}
 
 function images.load ()
 
-
+images.windowWidth,images.windowHeight = love.graphics.getDimensions( ) -- gets window dimensions
 
 end
 

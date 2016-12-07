@@ -3,7 +3,9 @@ require "images"
 
 
 function love.load()
-	
+
+    love.window.setMode(800, 600, {resizable=true, vsync=false, minwidth=400, minheight=300})
+
 	love.mouse.setVisible(true)
 	ingame = false
 	loadFunctions = false
@@ -44,6 +46,7 @@ function love.draw()
 
 	end
 	
+	DRAW_MENU()
 		--draw all non-game classes
 
 	love.graphics.setColor(255, 0, 0)

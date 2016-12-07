@@ -3,7 +3,7 @@ require "images"
 
 function menu.load ()
 
-
+--windowWidth, windowHeight = love.graphics.getDimensions( )
 
 end
 
