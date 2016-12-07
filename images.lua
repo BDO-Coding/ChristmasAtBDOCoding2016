@@ -2,7 +2,8 @@ images={}
 
 function images.load ()
 
-images.windowWidth,images.windowHeight = love.graphics.getDimensions( ) -- gets window dimensions
+
+	images.snowball = love.graphics.newImage("images/snowball.png")
 
 end
 
@@ -14,7 +15,7 @@ end
 
 function UPDATE_IMAGES(dt)
 
-
+	images.windowWidth,images.windowHeight = love.graphics.getDimensions() -- gets window dimensions
 
 end
 

@@ -35,6 +35,10 @@ function love.update(dt)
 	
 		--update all non-game classes
 
+		UPDATE_IMAGES()
+		UPDATE_MENU()
+
+
 end
  
 function love.draw()
