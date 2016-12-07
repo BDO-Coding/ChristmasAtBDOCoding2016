@@ -1,5 +1,6 @@
 require "menu"
 require "images"
+require "snowballFight"
 
 
 function love.load()
@@ -14,6 +15,7 @@ function love.load()
 
 	menu.load()
 	images.load()
+	snowballFight.load()
 
 	--load all non-game classes
 	
@@ -31,6 +33,7 @@ function love.update(dt)
 
 	if ingame == true then
 		--update all game classes
+		UPDATE_SNOWBALLFIGHT()
 	end
 	
 		--update all non-game classes
@@ -47,6 +50,7 @@ function love.draw()
 
 	if ingame == true then
 	    --draw all game classes
+	DRAW_SNOWBALLFIGHT()
 
 	end
 	
