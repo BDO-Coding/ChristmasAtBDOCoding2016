@@ -13,8 +13,8 @@ function love.load()
 	version_show = true 
 	fps_show = true 
 
-	menu.load()
 	images.load()
+	menu.load()
 	snowballFight.load()
 
 	--load all non-game classes

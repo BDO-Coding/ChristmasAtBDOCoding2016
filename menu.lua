@@ -3,45 +3,27 @@ require "images"
 
 function menu.load ()
 
-	snowballX, snowballY, snowballBounceX, snowballBounceY = 1,1,1,1
+	snowballNum = 10
+
+	snowballArray = {{}}
+
+	for i=1, snowballNum do
+		snowballArray[i] = {math.random(1,images.windowWidth),math.random(1,images.windowHeight),1,1,math.random(0.5,3),math.random(0.5,3),0.25} --snowballX, snowballY, snowballBounceX, snowballBounceY, speedX, speedY, size
+	end
 
 end
 
 function menu.draw()
 
-	love.graphics.draw(images.snowball,snowballX,snowballY,0.25,0.25)
+	for i=1, snowballNum do
+		love.graphics.draw(images.snowball,snowballArray[i][1],snowballArray[i][2],snowballArray[i][7],snowballArray[i][7])
+	end
 
 end
 
 function UPDATE_MENU(dt)
 
-	if snowballBounceX == 1 then
-		snowballX = snowballX + 1
-	else
-		snowballX = snowballX - 1
-	end
-
-	if snowballBounceY == 1 then
-		snowballY = snowballY + 1
-	else
-		snowballY = snowballY - 1
-	end
-
-	if snowballX>images.windowWidth or snowballX < 1 then
-		if snowballBounceX == 1 then
-			snowballBounceX = 0
-		else
-			snowballBounceX = 1
-		end
-	end
-
-	if snowballY>images.windowHeight or snowballY < 1 then
-		if snowballBounceY == 1 then
-			snowballBounceY = 0
-		else
-			snowballBounceY = 1
-		end
-	end
+snowballPhysics()
 
 end
 
@@ -49,4 +31,36 @@ function DRAW_MENU()
 
 	menu.draw()
 
+end
+
+function snowballPhysics()
+	for i=1, snowballNum do
+		if snowballArray[i][3] == 1 then
+			snowballArray[i][1] = snowballArray[i][1] + snowballArray[i][5]
+		else
+			snowballArray[i][1] = snowballArray[i][1] - snowballArray[i][5]
+		end
+
+		if snowballArray[i][4] == 1 then
+			snowballArray[i][2] = snowballArray[i][2] + snowballArray[i][6]
+		else
+			snowballArray[i][2] = snowballArray[i][2] - snowballArray[i][6]
+		end
+
+		if snowballArray[i][1]>images.windowWidth or snowballArray[i][1] < 1 then
+			if snowballArray[i][3] == 1 then
+				snowballArray[i][3] = 0
+			else
+				snowballArray[i][3] = 1
+			end
+		end
+
+		if snowballArray[i][2]>images.windowHeight or snowballArray[i][2] < 1 then
+			if snowballArray[i][4] == 1 then
+				snowballArray[i][4] = 0
+			else
+				snowballArray[i][4] = 1
+			end
+		end
+	end
 end

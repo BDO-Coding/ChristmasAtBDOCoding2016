@@ -3,6 +3,7 @@ images={}
 function images.load ()
 
 
+	images.windowWidth,images.windowHeight = love.graphics.getDimensions()
 	images.snowball = love.graphics.newImage("images/snowball.png")
 
 end
