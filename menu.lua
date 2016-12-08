@@ -3,12 +3,19 @@ require "images"
 
 function menu.load ()
 
-	snowballNum = 10
+	snowballNum = 100
+	snowballMinSpeed = 1 -- in km/hour
+	snowballMaxSpeed = 10 -- in km/hour
+
+	framesINANhour = love.timer.getFPS()*3600
+	pixelsINAKM = 3703703.7037
+
+	speedModifier = pixelsINAKM*framesINANhour --converts km/hour to pixels/frame
 
 	snowballArray = {{}}
 
 	for i=1, snowballNum do
-		snowballArray[i] = {math.random(1,images.windowWidth),math.random(1,images.windowHeight),1,1,math.random(0.5,3),math.random(0.5,3),0.25} --snowballX, snowballY, snowballBounceX, snowballBounceY, speedX, speedY, size
+		snowballArray[i] = {math.random(1,images.windowWidth),math.random(1,images.windowHeight),1,1,math.random(snowballMinSpeed,snowballMaxSpeed),math.random(snowballMinSpeed,snowballMaxSpeed),0.25} --snowballX, snowballY, snowballBounceX, snowballBounceY, speedX, speedY, size
 	end
 
 end
@@ -34,6 +41,12 @@ function DRAW_MENU()
 end
 
 function snowballPhysics()
+
+	--[[	framesINANhour = love.timer.getFPS()*3600
+	pixelsINAKM = 3703703.7037
+
+	speedModifier = pixelsINAKM*framesINANhour --converts km/hour to pixels/frame]]
+
 	for i=1, snowballNum do
 		if snowballArray[i][3] == 1 then
 			snowballArray[i][1] = snowballArray[i][1] + snowballArray[i][5]
