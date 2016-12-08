@@ -2,6 +2,7 @@ require "menu"
 require "images"
 require "snowballFight"
 require "iceSkating"
+require "buildASnowman"
 
 function love.load()
 
@@ -19,12 +20,15 @@ end
  
 function love.update(dt)
 
+	screenWidth = love.graphics.getWidth()
+	screenHeight = love.graphics.getHeight()
+
 	if ingame == 1 then
 		UPDATE_SNOWBALLFIGHT(dt)
 	elseif ingame == 2 then
 		UPDATE_ICESKATING(dt)
 	elseif ingame == 3 then
-
+		UPDATE_BUILDASNOWMAN(dt)
 	end
 	
 	UPDATE_IMAGES()
@@ -39,9 +43,9 @@ function love.draw()
 	if ingame == 1 then
 		DRAW_SNOWBALLFIGHT()
 	elseif ingame == 2 then
-		DRAW_SNOWBALLFIGHT()
+		DRAW_ICESKATING()
 	elseif ingame == 3 then
-
+		DRAW_BUILDASNOWMAN()
 	end
 	
 	DRAW_MENU()
