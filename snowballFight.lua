@@ -3,14 +3,10 @@ require "images"
 
 function snowballFight.load ()
 
-	snowballNum = 100
-	snowballMinSpeed = 0.25 -- in km/hour
-	snowballMaxSpeed = 0.5 -- in km/hour
+	snowballNum = 1
+	snowballMinSpeed = 50 -- in km/hour
+	snowballMaxSpeed = 50 -- in km/hour
 
-	framesINANhour = love.timer.getFPS()*3600
-	pixelsINAKM = 3703703.7037
-
-	speedModifier = pixelsINAKM*framesINANhour --converts km/hour to pixels/frame
 
 	snowballArray = {{}}
 
@@ -30,7 +26,10 @@ end
 
 function UPDATE_SNOWBALLFIGHT(dt)
 
-snowballPhysics()
+	snowballPhysics()
+	if love.mouse.isDown(1) == true then
+		addSnowball(1,1,1,1,math.random(10,50),math.random(10,50))
+	end
 
 end
 
@@ -42,22 +41,17 @@ end
 
 function snowballPhysics()
 
-	--[[	framesINANhour = love.timer.getFPS()*3600
-	pixelsINAKM = 3703703.7037
-
-	speedModifier = pixelsINAKM*framesINANhour --converts km/hour to pixels/frame]]
-
 	for i=1, snowballNum do
 		if snowballArray[i][3] == 1 then
-			snowballArray[i][1] = snowballArray[i][1] + snowballArray[i][5]
+			snowballArray[i][1] = snowballArray[i][1] + snowballArray[i][5]/100
 		else
-			snowballArray[i][1] = snowballArray[i][1] - snowballArray[i][5]
+			snowballArray[i][1] = snowballArray[i][1] - snowballArray[i][5]/100
 		end
 
 		if snowballArray[i][4] == 1 then
-			snowballArray[i][2] = snowballArray[i][2] + snowballArray[i][6]
+			snowballArray[i][2] = snowballArray[i][2] + snowballArray[i][6]/100
 		else
-			snowballArray[i][2] = snowballArray[i][2] - snowballArray[i][6]
+			snowballArray[i][2] = snowballArray[i][2] - snowballArray[i][6]/100
 		end
 
 		if snowballArray[i][1]>images.windowWidth or snowballArray[i][1] < 1 then
@@ -76,4 +70,12 @@ function snowballPhysics()
 			end
 		end
 	end
+end
+
+function addSnowball(x,y,bounceX,bounceY,xChange,yChange)
+
+
+	snowballArray[snowballNum+1] = {x,y,bounceX,bounceY,xChange,yChange,0.25}
+	snowballNum = snowballNum + 1
+
 end
