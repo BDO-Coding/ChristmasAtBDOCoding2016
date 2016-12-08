@@ -6,6 +6,8 @@ function snowballFight.load ()
 	snowballNum = 1
 	snowballMinSpeed = 50 -- in km/hour
 	snowballMaxSpeed = 50 -- in km/hour
+	airFriction = 0.01 -- -airFrictionPerTick
+	collisionFrictoin = 100 -- -this per tick in collision
 
 
 	snowballArray = {{}}
@@ -42,6 +44,22 @@ end
 function snowballPhysics()
 
 	for i=1, snowballNum do
+
+		--DO AIR FRICTION
+		if snowballArray[i][5] > 0 then
+			snowballArray[i][5] = snowballArray[i][5] - airFriction
+		else
+			snowballArray[i][5] = snowballArray[i][5] + airFriction
+		end
+
+		if snowballArray[i][6] > 0 then
+			snowballArray[i][6] = snowballArray[i][6] - airFriction
+		else
+			snowballArray[i][6] = snowballArray[i][6] + airFriction
+		end
+
+		--DO MOVEMENT
+
 		if snowballArray[i][3] == 1 then
 			snowballArray[i][1] = snowballArray[i][1] + snowballArray[i][5]/100
 		else
@@ -54,21 +72,17 @@ function snowballPhysics()
 			snowballArray[i][2] = snowballArray[i][2] - snowballArray[i][6]/100
 		end
 
+
+		--DO BOUNCING
+
 		if snowballArray[i][1]>images.windowWidth or snowballArray[i][1] < 1 then
-			if snowballArray[i][3] == 1 then
-				snowballArray[i][3] = 0
-			else
-				snowballArray[i][3] = 1
-			end
+			bounceSnowball(i,"x")
 		end
 
 		if snowballArray[i][2]>images.windowHeight or snowballArray[i][2] < 1 then
-			if snowballArray[i][4] == 1 then
-				snowballArray[i][4] = 0
-			else
-				snowballArray[i][4] = 1
-			end
+			bounceSnowball(i,"y")
 		end
+
 	end
 end
 
@@ -77,5 +91,25 @@ function addSnowball(x,y,bounceX,bounceY,xChange,yChange)
 
 	snowballArray[snowballNum+1] = {x,y,bounceX,bounceY,xChange,yChange,0.25}
 	snowballNum = snowballNum + 1
+
+end
+
+function bounceSnowball(snowballID,bounceType)
+
+	if bounceType == "x" then
+			if snowballArray[snowballID][3] == 1 then
+				snowballArray[snowballID][3] = 0
+			else
+				snowballArray[snowballID][3] = 1
+			end
+		end
+
+		if bounceType == "y" then
+			if snowballArray[snowballID][4] == 1 then
+				snowballArray[snowballID][4] = 0
+			else
+				snowballArray[snowballID][4] = 1
+			end
+		end
 
 end
