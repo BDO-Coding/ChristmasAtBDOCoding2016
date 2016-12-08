@@ -17,9 +17,9 @@ local tilesetSprite
 
 function menu.load()
 
-	r = 0
+	r = 200
 	g = 200
-	b = 255
+	b = 200
 
 	playgame = false
 
@@ -253,9 +253,19 @@ end
 
 function menu.update(dt)
 
-    --r = r + love.math.random(-10, 10)
-    --b = b + love.math.random(-5, 50)
-    --g = g + love.math.random(-10, 10)
+    r = r + love.math.random(-1, 1)
+    g = g + love.math.random(-1, 1)
+    b = b + love.math.random(-1, 1)
+
+    if r < 100 or r > 300 then
+    	r = 200
+    end
+    if g < 100 or g > 300 then
+    	g = 200
+    end
+    if b < 100 or b > 300 then
+    	b = 200
+    end
 
     clickDelay = clickDelay - dt
 
