@@ -7,7 +7,6 @@ function snowballFight.load ()
 	snowballMinSpeed = 50 -- in km/hour
 	snowballMaxSpeed = 50 -- in km/hour
 	airFriction = 0.02 -- -airFrictionPerTick
-	showHitboxes = false
 
 	redX,redY,redXMomentum,redYMomentum = 1,1,0,0
 
@@ -24,7 +23,7 @@ function snowballFight.draw()
 
 	for i=1, snowballNum do
 		if snowballArray[i][9] == true then	
-			if showHitboxes == true then
+			if developerMode == true then
 				love.graphics.line(snowballArray[i][1],snowballArray[i][2]+16,snowballArray[i][1],snowballArray[i][2]+3)
 				love.graphics.line(snowballArray[i][1]+12,snowballArray[i][2]+3,snowballArray[i][1],snowballArray[i][2]+3)
 				love.graphics.line(snowballArray[i][1]+12,snowballArray[i][2]+3,snowballArray[i][1]+12,snowballArray[i][2]+16)
@@ -143,21 +142,27 @@ end
 
 function characterMovement()
 
-if love.keyboard.isDown("w") == true then
-	redYMomentum = redYMomentum - 0.05
-end
+	redVelocity = 0.0401
 
-if love.keyboard.isDown("s") == true then
-	redYMomentum = redYMomentum + 0.05
-end
+	if love.keyboard.isDown("lctrl") then
+		redVelocity = 0.041
+	end
 
-if love.keyboard.isDown("a") == true then
-	redXMomentum = redXMomentum - 0.05
-end
+	if love.keyboard.isDown("w") == true then
+		redYMomentum = redYMomentum - redVelocity
+	end
 
-if love.keyboard.isDown("d") == true then
-	redXMomentum = redXMomentum + 0.05
-end
+	if love.keyboard.isDown("s") == true then
+		redYMomentum = redYMomentum + redVelocity
+	end
+
+	if love.keyboard.isDown("a") == true then
+		redXMomentum = redXMomentum - redVelocity
+	end
+
+	if love.keyboard.isDown("d") == true then
+		redXMomentum = redXMomentum + redVelocity
+	end
 
 end
 
