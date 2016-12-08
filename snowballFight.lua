@@ -6,7 +6,7 @@ function snowballFight.load ()
 	snowballNum = 1
 	snowballMinSpeed = 50 -- in km/hour
 	snowballMaxSpeed = 50 -- in km/hour
-	airFriction = 0.05 -- -airFrictionPerTick
+	airFriction = 0.02 -- -airFrictionPerTick
 
 	redX,redY = 1,1
 
@@ -14,7 +14,7 @@ function snowballFight.load ()
 	snowballArray = {{}}
 
 	for i=1, snowballNum do
-		snowballArray[i] = {math.random(1,images.windowWidth),math.random(1,images.windowHeight),1,1,math.random(snowballMinSpeed,snowballMaxSpeed),math.random(snowballMinSpeed,snowballMaxSpeed),0.25} --snowballX, snowballY, snowballBounceX, snowballBounceY, speedX, speedY, size
+		snowballArray[i] = {math.random(1,images.windowWidth),math.random(1,images.windowHeight),1,1,math.random(snowballMinSpeed,snowballMaxSpeed),math.random(snowballMinSpeed,snowballMaxSpeed),0.25,100} --snowballX, snowballY, snowballBounceX, snowballBounceY, speedX, speedY, size, despawnTimer
 	end
 
 end
@@ -88,8 +88,11 @@ function snowballPhysics()
 
 		--KILL STOPPED SNOWBALLS
 
-		if snowballArray[i][5] == 0 and snowballArray[i][6] == 0 then
-			table.remove(snowballArray,i)
+		if snowballArray[i][5] < 1 and snowballArray[i][6] < 1 then
+			snowballArray[i][8] = snowballArray[i][8] - 1
+			if snowballArray[i][8] < 0 then
+				snowballNum = snowballNum - 1
+			end
 		end
 
 	end
@@ -98,7 +101,7 @@ end
 function addSnowball(x,y,bounceX,bounceY,xChange,yChange)
 
 
-	snowballArray[snowballNum+1] = {x,y,bounceX,bounceY,xChange,yChange,0.25}
+	snowballArray[snowballNum+1] = {x,y,bounceX,bounceY,xChange,yChange,0.25,1000}
 	snowballNum = snowballNum + 1
 
 end
