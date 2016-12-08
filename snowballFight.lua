@@ -7,7 +7,7 @@ function snowballFight.load ()
 	snowballMinSpeed = 50 -- in km/hour
 	snowballMaxSpeed = 50 -- in km/hour
 	airFriction = 0.02 -- -airFrictionPerTick
-	showHitboxes = true
+	showHitboxes = false
 
 	redX,redY,redXMomentum,redYMomentum = 1,1,0,0
 
@@ -182,11 +182,10 @@ function characterPhysics()
 	end
 
 	for i = 1, snowballNum do
-		if snowballArray[9] == true then
-			if redX > snowballArray[i][1] and redX < snowballArray[i][1]+12 and redY > snowballArray[i][2]+3 and redY < snowballArray[i][2]+16 then
+		if snowballArray[i][9] == true then
+			if redX < snowballArray[i][1]-10 and redX > snowballArray[i][1]-40 and redY > snowballArray[i][2]-73 and redY < snowballArray[i][2]+16 then
 				snowballArray[i][9] = false
 			end
 		end
 	end
 end
-
