@@ -19,6 +19,8 @@ function menu.load()
 	g = 200
 	b = 255
 
+	playgame = false
+
     options = false
     credits = false
     loading = false
@@ -63,7 +65,7 @@ function menu.draw()
   
     end
 
-    if inmenu == true and options == false and ingame == 0 and credits == false then
+    if inmenu == true and options == false and playgame == false and ingame == 0 and credits == false then
 
         if mouseX > 170 and mouseX < 390 and mouseY > 180 and mouseY < 240 then
             love.graphics.setColor(59, 70, 219)
@@ -140,7 +142,27 @@ function menu.draw()
         love.graphics.print("Options", 562, 260, 0, 2, 3)
         love.graphics.print("Save", 580, 360, 0, 2, 3)
 
-    end 
+    end
+
+    if playgame == true then
+    	if mouseX > 170 and mouseX < 390 and mouseY > 180 and mouseY < 240 then
+            love.graphics.setColor(59, 70, 219)
+            love.graphics.rectangle("fill", 170, 180, 220, 60)
+        else
+            love.graphics.setColor(126, 204, 230)
+            love.graphics.rectangle("fill", 170, 180, 220, 60)
+        end
+        love.graphics.setColor(0,0,0)
+		love.graphics.rectangle("line", 170, 180, 220, 60)
+		love.graphics.print("Snowball Fight", 193, 190, 0, 2, 3)
+        if mouseX > 170 and mouseX < 390 and mouseY > 600 and mouseY < 660 then -- Back
+            love.graphics.setColor(59, 70, 219)
+            love.graphics.rectangle("fill", 170, 600, 220, 60)
+        else
+            love.graphics.setColor(126, 204, 230)
+            love.graphics.rectangle("fill", 170, 600, 220, 60)
+        end
+    end
 
     if credits == true then
         love.graphics.setColor(0, 255, 255)
@@ -150,7 +172,6 @@ function menu.draw()
         love.graphics.print("Art by: \n         Danny Harris and Ori Taylor", 320, 300, 0, 2, 2)
         --love.graphics.print("Sound by: \n         Nobody", 320, 380, 0, 2, 2)
         love.graphics.print("Programs used: \n         LÖVE for Lua\n         paint.net\n         Sublime Text", 320, 460, 0, 2, 2)
-
         if mouseX > 170 and mouseX < 390 and mouseY > 600 and mouseY < 660 then -- Back
             love.graphics.setColor(59, 70, 219)
             love.graphics.rectangle("fill", 170, 600, 220, 60)
@@ -325,7 +346,7 @@ function menu.options()
 
     if inmenu == true then
         love.graphics.setColor(0, 0, 0)
-        if credits == true or options == true then
+        if credits == true or options == true or playgame == true then
             if ingame == 0 then
                 love.graphics.rectangle("line", 170, 600, 220, 60)      --draw 'back' border
                 love.graphics.print("Back", 249, 610, 0, 2, 3)          --print back
@@ -344,19 +365,25 @@ function love.mousepressed(x, y, button, istouch)
 
         if ingame == 0 then
 
-            if button == 1 and x > 170 and x < 390 and y > 180 and y < 240 and options == false and credits == false and clickDelay < 0 then
+            if button == 1 and x > 170 and x < 390 and y > 180 and y < 240 and options == false and credits == false and playgame == false and clickDelay < 0 then
+            	playgame = true
+                clickDelay = 0.5
+            end
+
+            if button == 1 and x > 170 and x < 390 and y > 180 and y < 240 and playgame == true and clickDelay < 0 then
+            	playgame = false
             	inmenu = false
                 ingame = 1
                 snowballFight.load()
                 clickDelay = 0.5
             end
 
-            if button == 1 and x > 170 and x < 390 and y > 280 and y < 340 and options == false and clickDelay < 0 then
+            if button == 1 and x > 170 and x < 390 and y > 280 and y < 340 and options == false and credits == false and playgame == false and clickDelay < 0 then
                 options = true
                 clickDelay = 0.5
             end
 
-            if button == 1 and x > 170 and x < 390 and y > 380 and y < 440 and credits == false and clickDelay < 0 then
+            if button == 1 and x > 170 and x < 390 and y > 380 and y < 440 and options == false and credits == false and playgame == false and clickDelay < 0 then
                 credits = true
                 clickDelay = 0.5
             end
@@ -364,15 +391,12 @@ function love.mousepressed(x, y, button, istouch)
             if button == 1 and x > 170 and x < 390 and y > 600 and y < 660 and clickDelay < 0 then
                 options = false
                 credits = false
+                playgame = false
                 love.timer.sleep(0.1)
                 clickDelay = 0.5
             end
 
         elseif ingame == 1 then
-
-            if button == 1 and x > 170 and x < 390 and y > 360 and y < 420 and options == true and clickDelay < 0 then
-                autoSave = not autoSave
-            end
 
             if button == 1 and x > 500 and x < 720 and y > 150 and y < 210 and options == false and clickDelay < 0 then    --pause menu resume
                 inmenu = false
@@ -381,16 +405,6 @@ function love.mousepressed(x, y, button, istouch)
             if button == 1 and x > 500 and x < 720 and y > 250 and y < 310 and options == false and clickDelay < 0 then    --pause menu options
                 options = true
                 clickDelay = 0.5
-            end          
-            
-            if button == 1 and x > 170 and x < 390 and y > 500 and y < 560 and options == true and clickDelay < 0 then     --back from options
-                options = false
-                clickDelay = 0.5
-            end
-
-            if button == 1 and x > 500 and x < 720 and y > 350 and y < 410 and clickDelay < 0 then -------SAVING
-                save.save()
-                love.event.quit( )
             end
 
         end

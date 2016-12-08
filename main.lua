@@ -21,11 +21,14 @@ function love.update(dt)
 
 	if ingame == 1 then
 		UPDATE_SNOWBALLFIGHT(dt)
+	elseif ingame == 2 then
+		UPDATE_ICESKATING(dt)
+	elseif ingame == 3 then
+
 	end
 	
 	UPDATE_IMAGES()
 	UPDATE_MENU(dt)
-
 
 end
  
@@ -35,6 +38,10 @@ function love.draw()
 
 	if ingame == 1 then
 		DRAW_SNOWBALLFIGHT()
+	elseif ingame == 2 then
+		DRAW_SNOWBALLFIGHT()
+	elseif ingame == 3 then
+
 	end
 	
 	DRAW_MENU()
