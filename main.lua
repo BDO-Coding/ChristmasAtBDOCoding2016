@@ -17,6 +17,7 @@ function love.load()
 	menu.load()
 	snowballFight.load()
 
+	ingame = true
 	--load all non-game classes
 	
 end
