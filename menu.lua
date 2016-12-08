@@ -65,26 +65,26 @@ function menu.draw()
     if inmenu == true and options == false and ingame == 0 and credits == false then
 
         if mouseX > 170 and mouseX < 390 and mouseY > 180 and mouseY < 240 then
-            love.graphics.setColor(30, 125, 49)
+            love.graphics.setColor(59, 70, 219)
             love.graphics.rectangle("fill", 170, 180, 220, 60)
         else
-            love.graphics.setColor(31, 191, 63)
+            love.graphics.setColor(126, 204, 230)
             love.graphics.rectangle("fill", 170, 180, 220, 60)
         end
 
         if mouseX > 170 and mouseX < 390 and mouseY > 280 and mouseY < 340 then  -- Load button
-            love.graphics.setColor(30, 125, 49)
+            love.graphics.setColor(59, 70, 219)
             love.graphics.rectangle("fill", 170, 280, 220, 60)
         else
-            love.graphics.setColor(31, 191, 63)
+            love.graphics.setColor(126, 204, 230)
             love.graphics.rectangle("fill", 170, 280, 220, 60)
         end
 
         if mouseX > 170 and mouseX < 390 and mouseY > 380 and mouseY < 440 then
-            love.graphics.setColor(30, 125, 49)
+            love.graphics.setColor(59, 70, 219)
             love.graphics.rectangle("fill", 170, 380, 220, 60)
         else
-            love.graphics.setColor(31, 191, 63)
+            love.graphics.setColor(126, 204, 230)
             love.graphics.rectangle("fill", 170, 380, 220, 60)
         end
 
@@ -107,26 +107,26 @@ function menu.draw()
     if inmenu == true and options == false and ingame == 1 then
 
         if mouseX > 500 and mouseX < 720 and mouseY > 150 and mouseY < 210 then
-            love.graphics.setColor(30, 125, 49)
+            love.graphics.setColor(59, 70, 219)
             love.graphics.rectangle("fill", 500, 150, 220, 60)
         else
-            love.graphics.setColor(31, 191, 63)
+            love.graphics.setColor(126, 204, 230)
             love.graphics.rectangle("fill", 500, 150, 220, 60)
         end
 
         if mouseX > 500 and mouseX < 720 and mouseY > 250 and mouseY < 310 then
-            love.graphics.setColor(30, 125, 49)
+            love.graphics.setColor(59, 70, 219)
             love.graphics.rectangle("fill", 500, 250, 220, 60)
         else
-            love.graphics.setColor(31, 191, 63)
+            love.graphics.setColor(126, 204, 230)
             love.graphics.rectangle("fill", 500, 250, 220, 60)
         end
 
         if mouseX > 500 and mouseX < 720 and mouseY > 350 and mouseY < 410 then
-            love.graphics.setColor(30, 125, 49)
+            love.graphics.setColor(59, 70, 219)
             love.graphics.rectangle("fill", 500, 350, 220, 60)
         else
-            love.graphics.setColor(31, 191, 63)
+            love.graphics.setColor(126, 204, 230)
             love.graphics.rectangle("fill", 500, 350, 220, 60)
         end
 
@@ -151,10 +151,10 @@ function menu.draw()
         love.graphics.print("Programs used: \n         LÖVE for Lua\n         paint.net\n         Sublime Text", 320, 460, 0, 2, 2)
 
         if mouseX > 170 and mouseX < 390 and mouseY > 600 and mouseY < 660 then -- Back
-            love.graphics.setColor(30, 125, 49)
+            love.graphics.setColor(59, 70, 219)
             love.graphics.rectangle("fill", 170, 600, 220, 60)
         else
-            love.graphics.setColor(31, 191, 63)
+            love.graphics.setColor(126, 204, 230)
             love.graphics.rectangle("fill", 170, 600, 220, 60)
         end
     end
@@ -261,34 +261,34 @@ function menu.options()
 
     if inmenu == true and options == true then
         if mouseX > 170 and mouseX < 390 and mouseY > 200 and mouseY < 260 then -- FPS on/off
-            love.graphics.setColor(30, 125, 49)
+            love.graphics.setColor(59, 70, 219)
             love.graphics.rectangle("fill", 170, 200, 220, 60)
         else
-            love.graphics.setColor(31, 191, 63)
+            love.graphics.setColor(126, 204, 230)
             love.graphics.rectangle("fill", 170, 200, 220, 60)
         end
 
         if mouseX > 170 and mouseX < 390 and mouseY > 280 and mouseY < 340 then -- version on/off
-            love.graphics.setColor(30, 125, 49)
+            love.graphics.setColor(59, 70, 219)
             love.graphics.rectangle("fill", 170, 280, 220, 60)
         else
-            love.graphics.setColor(31, 191, 63)
+            love.graphics.setColor(126, 204, 230)
             love.graphics.rectangle("fill", 170, 280, 220, 60)
         end
 
         if mouseX > 410 and mouseX < 630 and mouseY > 200 and mouseY < 260 then -- audio volume
-            love.graphics.setColor(30, 125, 49)
+            love.graphics.setColor(59, 70, 219)
             love.graphics.rectangle("fill", 410, 200, 220, 60)
         else
-            love.graphics.setColor(31, 191, 63)
+            love.graphics.setColor(126, 204, 230)
             love.graphics.rectangle("fill", 410, 200, 220, 60)
         end
 
         if mouseX > 170 and mouseX < 390 and mouseY > 600 and mouseY < 660 then -- Back
-            love.graphics.setColor(30, 125, 49)
+            love.graphics.setColor(59, 70, 219)
             love.graphics.rectangle("fill", 170, 600, 220, 60)
         else
-            love.graphics.setColor(31, 191, 63)
+            love.graphics.setColor(126, 204, 230)
             love.graphics.rectangle("fill", 170, 600, 220, 60)
         end
 
