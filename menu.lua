@@ -1,4 +1,5 @@
 menu = {}
+require "snowballFight"
 local map -- stores tiledata
 local mapWidth, mapHeight -- width and height in tiles
  
@@ -342,6 +343,7 @@ function love.mousepressed(x, y, button, istouch)
             if button == 1 and x > 170 and x < 390 and y > 180 and y < 240 and options == false and credits == false and clickDelay < 0 then
             	inmenu = false
                 ingame = 1
+                snowballFight.load()
                 clickDelay = 0.5
             end
 

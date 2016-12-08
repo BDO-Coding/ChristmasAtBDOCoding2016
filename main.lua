@@ -1,7 +1,7 @@
 require "menu"
 require "images"
 require "snowballFight"
-
+require "iceSkating"
 
 function love.load()
 
@@ -14,25 +14,15 @@ function love.load()
 
 	images.load()
 	menu.load()
-	snowballFight.load()
-	
-	--load all non-game classes
 	
 end
  
 function love.update(dt)
 
-	if loadFunctions == true then
-		--load all game classes
-        loadFunctions = false
-	end
-
 	if ingame == 1 then
-		--update all game classes
 		UPDATE_SNOWBALLFIGHT(dt)
 	end
 	
-	--update all non-game classes
 	UPDATE_IMAGES()
 	UPDATE_MENU(dt)
 
@@ -44,13 +34,10 @@ function love.draw()
 	love.graphics.setColor(255, 255, 255)
 
 	if ingame == 1 then
-	    --draw all game classes
 		DRAW_SNOWBALLFIGHT()
-
 	end
 	
 	DRAW_MENU()
-	--draw all non-game classes
 
 	love.graphics.setColor(255, 50, 50)
 
