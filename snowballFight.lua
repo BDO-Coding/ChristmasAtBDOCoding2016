@@ -6,7 +6,9 @@ function snowballFight.load ()
 	snowballNum = 1
 	snowballMinSpeed = 50 -- in km/hour
 	snowballMaxSpeed = 50 -- in km/hour
-	airFriction = 0.01 -- -airFrictionPerTick
+	airFriction = 0.05 -- -airFrictionPerTick
+
+	redX,redY = 1,1
 
 
 	snowballArray = {{}}
@@ -22,13 +24,14 @@ function snowballFight.draw()
 	for i=1, snowballNum do
 		love.graphics.draw(images.snowball,snowballArray[i][1],snowballArray[i][2],snowballArray[i][7],snowballArray[i][7])
 	end
-		love.graphics.draw(images.redEskimo,500,500)
+		love.graphics.draw(images.redEskimo,redX,redY)
 
 end
 
 function UPDATE_SNOWBALLFIGHT(dt)
 
 	snowballPhysics()
+	characterMovement()
 	if love.mouse.isDown(1) == true then
 		addSnowball(1,1,1,1,math.random(10,50),math.random(10,50))
 	end
@@ -117,5 +120,13 @@ function bounceSnowball(snowballID,bounceType)
 				snowballArray[snowballID][4] = 1
 			end
 		end
+
+end
+
+function characterMovement()
+
+if love.keyboard.isDown("w") == true then
+	redY = redY - 1
+end
 
 end
