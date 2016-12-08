@@ -7,7 +7,6 @@ function snowballFight.load ()
 	snowballMinSpeed = 50 -- in km/hour
 	snowballMaxSpeed = 50 -- in km/hour
 	airFriction = 0.01 -- -airFrictionPerTick
-	collisionFrictoin = 100 -- -this per tick in collision
 
 
 	snowballArray = {{}}
@@ -23,6 +22,7 @@ function snowballFight.draw()
 	for i=1, snowballNum do
 		love.graphics.draw(images.snowball,snowballArray[i][1],snowballArray[i][2],snowballArray[i][7],snowballArray[i][7])
 	end
+		love.graphics.draw(images.redEskimo,500,500)
 
 end
 
@@ -81,6 +81,12 @@ function snowballPhysics()
 
 		if snowballArray[i][2]>images.windowHeight or snowballArray[i][2] < 1 then
 			bounceSnowball(i,"y")
+		end
+
+		--KILL STOPPED SNOWBALLS
+
+		if snowballArray[i][5] == 0 and snowballArray[i][6] == 0 then
+			table.remove(snowballArray,i)
 		end
 
 	end

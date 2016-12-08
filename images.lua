@@ -4,7 +4,9 @@ function images.load ()
 
 
 	images.windowWidth,images.windowHeight = love.graphics.getDimensions()
+
 	images.snowball = love.graphics.newImage("images/snowball.png")
+	images.redEskimo = love.graphics.newImage("images/redEskimo.png")
 
 end
 
