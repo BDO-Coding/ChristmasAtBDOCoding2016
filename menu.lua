@@ -201,11 +201,11 @@ function menu.setupMapView()
     mapX = 1
     mapY = 1
 
-    tilesDisplayWidth = 26
-    tilesDisplayHeight = 26
+    tilesDisplayWidth = 32
+    tilesDisplayHeight = 20
 
-    zoomX = 2
-    zoomY = 2
+    zoomX = 3
+    zoomY = 1.5
 
 end
 
@@ -231,7 +231,7 @@ function menu.updateTilesetBatch()
     tilesetBatch:clear()
 	for x=0, tilesDisplayWidth-1 do
 		for y=0, tilesDisplayHeight-1 do
-			tilesetBatch:add(tileQuads[1]--[[map[x+math.floor(mapX)][y+math.floor(mapY)]], x*tileSize, y*tileSize)
+			tilesetBatch:add(tileQuads[1], x*tileSize, y*tileSize)
 		end
 	end
 	tilesetBatch:flush()
@@ -244,10 +244,7 @@ function menu.moveMap(dx, dy)
 	oldMapY = mapY
 	mapX = math.max(math.min(mapX + dx, mapWidth - tilesDisplayWidth), 1)
 	mapY = math.max(math.min(mapY + dy, mapHeight - tilesDisplayHeight), 1)
-	-- only update if we actually moved
-	if math.floor(mapX) ~= math.floor(oldMapX) or math.floor(mapY) ~= math.floor(oldMapY) then
-		menu.updateTilesetBatch()
-	end
+	menu.updateTilesetBatch()
 
 end
 
@@ -278,12 +275,20 @@ function menu.update(dt)
         moveDelay = moveDelay - moveTime
         if moveDelay > 15 then
             menu.moveMap(moveSpeed * tileSize, 0)
+            zoomX = 3
+    		zoomY = 1.5
         elseif moveDelay > 10 then
             menu.moveMap(0, moveSpeed * tileSize)
+            zoomX = 1.5
+    		zoomY = 3
         elseif moveDelay > 5 then
             menu.moveMap(-moveSpeed * tileSize, 0)
+            zoomX = 3
+    		zoomY = 1.5
         elseif moveDelay > 0 then
             menu.moveMap(0, -moveSpeed * tileSize)
+            zoomX = 1.5
+    		zoomY = 3
         elseif moveDelay < 0 then
             moveDelay = 20
         end
