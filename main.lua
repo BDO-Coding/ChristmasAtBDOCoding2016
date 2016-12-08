@@ -8,7 +8,7 @@ function love.load()
 	love.mouse.setVisible(true)
 	ingame = 0
 	inmenu = true
-	loadFunctions = false
+	developerMode = false
 	version_show = true 
 	fps_show = true 
 
@@ -53,11 +53,9 @@ function love.draw()
     	love.graphics.print("FPS: "..love.timer.getFPS(), 10, 10) --FPS Counter	
     end
 
-	love.graphics.print("MouseX: "..love.mouse.getX(), 10, 50)
-    love.graphics.print("MouseY: "..love.mouse.getY(), 10, 60)
-
-    if ingame == 1 and doLoadScreen == false then
-    	--print ingame stuff
+    if developerMode == true then
+    	love.graphics.print("MouseX: "..love.mouse.getX(), 10, 50)
+    	love.graphics.print("MouseY: "..love.mouse.getY(), 10, 60)
 	end
 
 end

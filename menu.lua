@@ -240,9 +240,13 @@ function menu.update(dt)
 
     clickDelay = clickDelay - dt
 
+    if love.keyboard.isDown("x") and clickDelay < 0 then
+    	clickDelay = 0.5
+    	developerMode = not developerMode
+    end
+
     if ingame == 0 then
         moveDelay = moveDelay - moveTime
-
         if moveDelay > 15 then
             menu.moveMap(moveSpeed * tileSize, 0)
         elseif moveDelay > 10 then
