@@ -24,10 +24,12 @@ function snowballFight.draw()
 		if snowballArray[i][9] == true then	
 			if developerMode == true then --Shows hitboxes
 				images.showhitbox(snowballArray[i][1], snowballArray[i][2]+3, 12, 12)
-				images.showhitbox(redX+10, redY+12, 42, 52)
 			end
 			love.graphics.draw(images.snowball,snowballArray[i][1],snowballArray[i][2],snowballArray[i][7],snowballArray[i][7])
 		end
+	end
+	if developerMode == true then --Shows hitboxes
+		images.showhitbox(redX+10, redY+12, 42, 52)
 	end
 	love.graphics.draw(images.redEskimo,redX,redY)
 
