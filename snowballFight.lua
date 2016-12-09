@@ -3,6 +3,8 @@ require "images"
 
 function snowballFight.load ()
 
+	love.graphics.setBackgroundColor(192,223,235)
+
 	snowballNum = 1
 	snowballMinSpeed = 50 -- in km/hour
 	snowballMaxSpeed = 50 -- in km/hour
@@ -115,7 +117,7 @@ end
 
 function addSnowball(x,y,bounceX,bounceY,xChange,yChange)
 
-	snowballArray[snowballNum+1] = {x,y,bounceX,bounceY,xChange,yChange,0.25,1000,true}
+	snowballArray[snowballNum+1] = {x,y,bounceX,bounceY,xChange,yChange,0.25,1000,true,3}
 	snowballNum = snowballNum + 1
 
 end
@@ -188,9 +190,18 @@ function characterPhysics()
 
 	for i = 1, snowballNum do
 		if snowballArray[i][9] == true then
-			if redX < snowballArray[i][1]-10 and redX > snowballArray[i][1]-40 and redY > snowballArray[i][2]-73 and redY < snowballArray[i][2]+16 then
-				snowballArray[i][9] = false
-			end
+			--if not snowballArray[i][10] == 0 then
+				if redX < snowballArray[i][1]-10 and redX > snowballArray[i][1]-40 and redY > snowballArray[i][2]-73 and redY < snowballArray[i][2]+16 then
+					random = math.random(1,2)
+					if random == 1 then
+						snowballArray[i][9] = false
+					else
+						snowballArray[i][5] = snowballArray[i][5] + math.random(-1,0.5)
+						snowballArray[i][6] = snowballArray[i][6] + math.random(-1,0.5)
+						snowballArray[i][10] = 0
+					end
+				end
+			--end
 		end
 	end
 end
