@@ -117,7 +117,7 @@ end
 
 function addSnowball(x,y,bounceX,bounceY,xChange,yChange)
 
-	snowballArray[snowballNum+1] = {x,y,bounceX,bounceY,xChange,yChange,0.25,1000,true,3}
+	snowballArray[snowballNum+1] = {x,y,bounceX,bounceY,xChange,yChange,0.25,1000,true,0}
 	snowballNum = snowballNum + 1
 
 end
@@ -190,18 +190,14 @@ function characterPhysics()
 
 	for i = 1, snowballNum do
 		if snowballArray[i][9] == true then
-			--if not snowballArray[i][10] == 0 then
-				if redX < snowballArray[i][1]-10 and redX > snowballArray[i][1]-40 and redY > snowballArray[i][2]-73 and redY < snowballArray[i][2]+16 then
-					random = math.random(1,2)
-					if random == 1 then
-						snowballArray[i][9] = false
-					else
-						snowballArray[i][5] = snowballArray[i][5] + math.random(-1,0.5)
-						snowballArray[i][6] = snowballArray[i][6] + math.random(-1,0.5)
-						snowballArray[i][10] = 0
-					end
+			if redX < snowballArray[i][1]-10 and redX > snowballArray[i][1]-40 and redY > snowballArray[i][2]-73 and redY < snowballArray[i][2]+16 then
+				if snowballArray[i][10] ~= 0 then
+					snowballArray[i][9] = false
+				else
+					bounceSnowball(i,"x")
+					bounceSnowball(i,"y")
 				end
-			--end
+			end
 		end
 	end
 end
