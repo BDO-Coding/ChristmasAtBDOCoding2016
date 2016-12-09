@@ -173,19 +173,19 @@ function characterPhysics()
 	redY,redX = redY + redYMomentum, redX + redXMomentum
 
 	if redYMomentum > 0 then
-		redYMomentum = redYMomentum - airFriction*2
+		redYMomentum = redYMomentum - airFriction
 	end
 
 	if redXMomentum > 0 then
-		redXMomentum = redXMomentum - airFriction*2
+		redXMomentum = redXMomentum - airFriction
 	end
 
 	if redYMomentum < 0 then
-		redYMomentum = redYMomentum + airFriction*2
+		redYMomentum = redYMomentum + airFriction
 	end
 	
 	if redXMomentum < 0 then
-		redXMomentum = redXMomentum + airFriction*2
+		redXMomentum = redXMomentum + airFriction
 	end
 
 	for i = 1, snowballNum do
