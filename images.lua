@@ -11,9 +11,9 @@ function images.load ()
 
 end
 
-function images.draw()
+function images.showhitbox(x,y,sizex,sizey)
 
-
+	love.graphics.rectangle("line", x, y, sizex, sizey)
 
 end
 
