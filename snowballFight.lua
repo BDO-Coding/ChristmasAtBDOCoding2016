@@ -17,7 +17,7 @@ function snowballFight.load ()
 	end
 
 end
-
+ 
 function snowballFight.draw()
 
 	for i=1, snowballNum do
