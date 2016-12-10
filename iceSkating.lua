@@ -13,10 +13,93 @@ local tileSize -- size of tiles in pixels
 local tileQuads = {} -- parts of the tileset used for different tiles
 local tilesetSprite
 
+function iceSkating.load()
+
+	iceSkating.setupMap()
+	iceSkating.setupMapView()
+	iceSkating.setupTileset()
+
+	airFriction = 0.02 -- -airFrictionPerTick
+	redX,redY,redXMomentum,redYMomentum = 1,1,0,0
+	blueX,blueY,blueXMomentum,blueYMomentum = 1,1,0,0
+
+end
+
+function iceSkating.update(dt)
+
+	redVelocity = 0.022
+
+	if love.keyboard.isDown("lctrl") then
+		redVelocity = 0.025
+	end
+
+	if love.keyboard.isDown("w") == true then
+		redYMomentum = redYMomentum - redVelocity
+		--iceSkating.moveMap(0, -0.2 * tileSize * dt)
+	end
+
+	if love.keyboard.isDown("s") == true then
+		redYMomentum = redYMomentum + redVelocity
+		--iceSkating.moveMap(0, 0.2 * tileSize * dt)
+	end
+
+	if love.keyboard.isDown("a") == true then
+		redXMomentum = redXMomentum - redVelocity
+		--iceSkating.moveMap(-0.2 * tileSize * dt, 0)
+	end
+
+	if love.keyboard.isDown("d") == true then
+		redXMomentum = redXMomentum + redVelocity
+		--iceSkating.moveMap(0.2 * tileSize * dt, 0)
+	end
+
+end
+
+function iceSkating.hitbox(x1,x2,y1,y2,value)
+
+	if value == "in" then
+		if redX < x1 then
+			--TODO
+		end
+	else
+
+	end
+
+end
+
+function iceSkating.characterPhysics()
+
+	redY,redX = redY + redYMomentum, redX + redXMomentum
+
+	if redYMomentum > 0 then
+		redYMomentum = redYMomentum - airFriction
+	end
+
+	if redXMomentum > 0 then
+		redXMomentum = redXMomentum - airFriction
+	end
+
+	if redYMomentum < 0 then
+		redYMomentum = redYMomentum + airFriction
+	end
+	
+	if redXMomentum < 0 then
+		redXMomentum = redXMomentum + airFriction
+	end
+
+end
+
+function iceSkating.draw()
+
+	love.graphics.draw(tilesetBatch, math.floor(-zoomX*(mapX%1)*tileSize), math.floor(-zoomY*(mapY%1)*tileSize), 0, zoomX, zoomY)
+	love.graphics.draw(images.redEskimo,redX,redY)
+
+end
+
 function iceSkating.setupMap()
 
-	mapWidth = 60
-	mapHeight = 40
+	mapWidth = 100
+	mapHeight = 100
 
 	map = {}
 	for x=1,mapWidth do
@@ -93,47 +176,10 @@ function iceSkating.moveMap(dx, dy)
 
 end
 
-function iceSkating.load()
-
-	iceSkating.setupMap()
-	iceSkating.setupMapView()
-	iceSkating.setupTileset()
-
-	airFriction = 0.02 -- -airFrictionPerTick
-	redX,redY,redXMomentum,redYMomentum = 1,1,0,0
-	blueX,blueY,blueXMomentum,blueYMomentum = 1,1,0,0
-
-end
-
-function iceSkating.update(dt)
-
-	if love.keyboard.isDown("w")  then
-		iceSkating.moveMap(0, -0.2 * tileSize * dt)
-	end
-	if love.keyboard.isDown("s")  then
-		iceSkating.moveMap(0, 0.2 * tileSize * dt)
-	end
-	if love.keyboard.isDown("a")  then
-		iceSkating.moveMap(-0.2 * tileSize * dt, 0)
-	end
-	if love.keyboard.isDown("d")  then
-		iceSkating.moveMap(0.2 * tileSize * dt, 0)
-	end
-
-end
-
-function iceSkating.draw()
-
-	love.graphics.draw(tilesetBatch, math.floor(-zoomX*(mapX%1)*tileSize), math.floor(-zoomY*(mapY%1)*tileSize), 0, zoomX, zoomY)
-
-	--love.graphics.print("Ice skating is a\nto-be-added feature",screenWidth/12,screenHeight/2,0,5,5)
-	love.graphics.draw(images.redEskimo,redX,redY)
-
-end
-
 function UPDATE_ICESKATING(dt)
 
 	iceSkating.update(dt)
+	iceSkating.characterPhysics()
 
 end
 
