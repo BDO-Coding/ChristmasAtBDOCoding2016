@@ -36,7 +36,7 @@ function menu.load()
     playerImageSize = 3
     playerImageX = 500
 
-    moveSpeed = 0.001
+    moveSpeed = 0.0001
     moveTime = 0.001
     moveDelay = 20
 
@@ -190,7 +190,7 @@ function menu.setupMap()
     for x=1, mapWidth do
         map[x] = {}
         for y=1, mapHeight do
-           map[x][y] = love.math.random(0,3)
+           map[x][y] = 0
         end
     end
 
@@ -204,8 +204,8 @@ function menu.setupMapView()
     tilesDisplayWidth = 32
     tilesDisplayHeight = 20
 
-    zoomX = 3
-    zoomY = 1.5
+    zoomX = 2
+    zoomY = 2
 
 end
 
@@ -216,11 +216,7 @@ function menu.setupTileset()
     tileSize = 32
 
     -- Ocean
-    tileQuads[0] = love.graphics.newQuad(0 * tileSize, 0 * tileSize, tileSize, tileSize, tilesetImage:getWidth(), tilesetImage:getHeight())
-    --Snow
-    tileQuads[1] = love.graphics.newQuad(1 * tileSize, 0 * tileSize, tileSize, tileSize, tilesetImage:getWidth(), tilesetImage:getHeight())
-    --Ice
-    tileQuads[2] = love.graphics.newQuad(2 * tileSize, 0 * tileSize, tileSize, tileSize, tilesetImage:getWidth(), tilesetImage:getHeight())
+    tileQuads[0] = love.graphics.newQuad(1 * tileSize, 0 * tileSize, tileSize, tileSize, tilesetImage:getWidth(), tilesetImage:getHeight())
 
     tilesetBatch = love.graphics.newSpriteBatch(tilesetImage, tilesDisplayWidth * tilesDisplayHeight)
 
@@ -231,7 +227,7 @@ function menu.updateTilesetBatch()
     tilesetBatch:clear()
 	for x=0, tilesDisplayWidth-1 do
 		for y=0, tilesDisplayHeight-1 do
-			tilesetBatch:add(tileQuads[1], x*tileSize, y*tileSize)
+			tilesetBatch:add(tileQuads[map[x+math.floor(mapX)][y+math.floor(mapY)]], x*tileSize, y*tileSize)
 		end
 	end
 	tilesetBatch:flush()
@@ -275,20 +271,12 @@ function menu.update(dt)
         moveDelay = moveDelay - moveTime
         if moveDelay > 15 then
             menu.moveMap(moveSpeed * tileSize, 0)
-            zoomX = 3
-    		zoomY = 1.5
         elseif moveDelay > 10 then
             menu.moveMap(0, moveSpeed * tileSize)
-            zoomX = 1.5
-    		zoomY = 3
         elseif moveDelay > 5 then
             menu.moveMap(-moveSpeed * tileSize, 0)
-            zoomX = 3
-    		zoomY = 1.5
         elseif moveDelay > 0 then
             menu.moveMap(0, -moveSpeed * tileSize)
-            zoomX = 1.5
-    		zoomY = 3
         elseif moveDelay < 0 then
             moveDelay = 20
         end
