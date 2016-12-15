@@ -29,8 +29,11 @@ function iceSkating.update(dt)
 
 	currentTile = map[(math.floor(mapX+0.5))+9][(math.floor(mapY+0.5))+5]
 
+	map1 = {}
 	for x=1,mapWidth do
+		map1[x] = {}
 		for y=1,mapHeight do
+			if map1[x][y] == 1 then
 				
 			end
 		end
