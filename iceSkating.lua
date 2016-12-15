@@ -25,60 +25,20 @@ function iceSkating.load()
 
 end
 
-function iceSkating.update(dt)
+function iceSkating.hitbox(x1,x2,y1,y2,eff)
 
-	currentTile = map[(math.floor(mapX+0.5))+9][(math.floor(mapY+0.5))+5]
-
-	map1 = {}
-	for x=1,mapWidth do
-		map1[x] = {}
-		for y=1,mapHeight do
-			if map1[x][y] == 1 then
-				
+	if redX > x1 and redX < x2 and redY > y1 and redY < y2 then
+		if eff == "stop" then
+			if redDirect == "left" then
+				redX = x2
+			elseif redDirect == "right" then
+				redX = x1
+			elseif redDirect == "up" then
+				redY = y2
+			elseif redDirect == "down" then
+				redY = y1
 			end
 		end
-	end
-
-	redVelocity = 0.022
-
-	if love.keyboard.isDown("lctrl") then
-		redVelocity = 0.025
-	end
-
-	if love.keyboard.isDown("w") == true then
-		redYMomentum = redYMomentum - redVelocity
-	end
-
-	if love.keyboard.isDown("s") == true then
-		redYMomentum = redYMomentum + redVelocity
-	end
-
-	if love.keyboard.isDown("a") == true then
-		redXMomentum = redXMomentum - redVelocity
-	end
-
-	if love.keyboard.isDown("d") == true then
-		redXMomentum = redXMomentum + redVelocity
-	end
-
-end
-
-function iceSkating.hitbox(x1,x2,y1,y2)
-
-	if redX > x1 then
-		redX = x1
-	end
-
-	if redX < x2 then
-		redX = x2
-	end
-
-	if redY > y1 then
-		redY = y1
-	end
-
-	if redY < y2 then
-		redY = y2
 	end
 
 end
@@ -130,13 +90,6 @@ function iceSkating.characterPhysics(dt)
 			iceSkating.moveMap(0.2 * tileSize * dt, 0)
 		end
 	end
-
-end
-
-function iceSkating.draw()
-
-	love.graphics.draw(tilesetBatch, math.floor(-zoomX*(mapX%1)*tileSize), math.floor(-zoomY*(mapY%1)*tileSize), 0, zoomX, zoomY)
-	love.graphics.draw(images.redEskimoIce,redX,redY)
 
 end
 
@@ -217,6 +170,50 @@ function iceSkating.moveMap(dx, dy)
 	if math.floor(mapX) ~= math.floor(oldMapX) or math.floor(mapY) ~= math.floor(oldMapY) then
 		iceSkating.updateTilesetBatch()
 	end
+
+end
+
+function iceSkating.update(dt)
+
+	for x=1, mapWidth do
+		for y=0, mapHeight do
+			if map[x][y] == 0 then
+				print((math.floor((x)*-64)))
+				--iceSkating.hitbox(,,200,300,"stop")
+			end
+		end
+	end
+
+	currentTile = map[(math.floor(mapX+0.5))+9][(math.floor(mapY+0.5))+5]
+
+	redVelocity = 0.022
+
+	if love.keyboard.isDown("w") == true then
+		redYMomentum = redYMomentum - redVelocity
+		redDirect = "up"
+	end
+
+	if love.keyboard.isDown("s") == true then
+		redYMomentum = redYMomentum + redVelocity
+		redDirect = "down"
+	end
+
+	if love.keyboard.isDown("a") == true then
+		redXMomentum = redXMomentum - redVelocity
+		redDirect = "left"
+	end
+
+	if love.keyboard.isDown("d") == true then
+		redXMomentum = redXMomentum + redVelocity
+		redDirect = "right"
+	end
+
+end
+
+function iceSkating.draw()
+
+	love.graphics.draw(tilesetBatch, math.floor(-zoomX*(mapX%1)*tileSize), math.floor(-zoomY*(mapY%1)*tileSize), 0, zoomX, zoomY)
+	love.graphics.draw(images.redEskimoIce,redX,redY)
 
 end
 
