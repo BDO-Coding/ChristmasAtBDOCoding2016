@@ -13,6 +13,7 @@ function images.load ()
 	images.blueEskimoIce = love.graphics.newImage("images/blueEskimoIce.png")
 	images.snowman = love.graphics.newImage("images/snowman.png")
 	images.title = love.graphics.newImage("images/title.png")
+	images.barricade = love.graphics.newImage("images/barricade.png")
 
 end
 

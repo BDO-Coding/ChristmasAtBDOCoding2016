@@ -11,9 +11,14 @@ function snowballFight.load ()
 	airFriction = 0.02 -- -airFrictionPerTick
 	redX,redY,redXMomentum,redYMomentum = 1,1,0,0
 	snowballArray = {{}}
+	barricadeArray = {{}}
 
 	for i=1, snowballNum do
 		snowballArray[i] = {math.random(1,images.windowWidth),math.random(1,images.windowHeight),1,1,math.random(snowballMinSpeed,snowballMaxSpeed),math.random(snowballMinSpeed,snowballMaxSpeed),0.25,100,true,3} --snowballX, snowballY, snowballBounceX, snowballBounceY, speedX, speedY, size, despawnTimer,active,team 0=red 1= blue 3 = neutral
+	end
+
+	for i=1, 3 do
+		barricadeArray[i] = {math.random(1,images.windowWidth),math.random(1,images.windowHeight),0} --X,Y,team
 	end
 
 end
@@ -32,6 +37,10 @@ function snowballFight.draw()
 		images.showhitbox(redX+10, redY+12, 42, 52)
 	end
 	love.graphics.draw(images.redEskimoFight,redX,redY)
+
+	for i=1, 3 do
+		love.graphics.draw(images.barricade,barricadeArray[i][1],barricadeArray[i][2])
+	end
 
 end
 
