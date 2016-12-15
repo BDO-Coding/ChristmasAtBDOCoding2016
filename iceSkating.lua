@@ -35,22 +35,18 @@ function iceSkating.update(dt)
 
 	if love.keyboard.isDown("w") == true then
 		redYMomentum = redYMomentum - redVelocity
-		--iceSkating.moveMap(0, -0.2 * tileSize * dt)
 	end
 
 	if love.keyboard.isDown("s") == true then
 		redYMomentum = redYMomentum + redVelocity
-		--iceSkating.moveMap(0, 0.2 * tileSize * dt)
 	end
 
 	if love.keyboard.isDown("a") == true then
 		redXMomentum = redXMomentum - redVelocity
-		--iceSkating.moveMap(-0.2 * tileSize * dt, 0)
 	end
 
 	if love.keyboard.isDown("d") == true then
 		redXMomentum = redXMomentum + redVelocity
-		--iceSkating.moveMap(0.2 * tileSize * dt, 0)
 	end
 
 end
@@ -67,7 +63,7 @@ function iceSkating.hitbox(x1,x2,y1,y2,value)
 
 end
 
-function iceSkating.characterPhysics()
+function iceSkating.characterPhysics(dt)
 
 	redY,redX = redY + redYMomentum, redX + redXMomentum
 
@@ -87,12 +83,40 @@ function iceSkating.characterPhysics()
 		redXMomentum = redXMomentum + airFriction
 	end
 
+	if redY < -30 then
+		redY = -30
+		if love.keyboard.isDown("w") then
+			iceSkating.moveMap(0, -0.2 * tileSize * dt)
+		end
+	end
+
+	if redX < -30 then
+		redX = -30
+		if love.keyboard.isDown("a") then
+			iceSkating.moveMap(-0.2 * tileSize * dt, 0)
+		end
+	end
+
+	if redY > images.windowHeight - 30 then
+		redY = images.windowHeight - 30
+		if love.keyboard.isDown("s") then
+			iceSkating.moveMap(0, 0.2 * tileSize * dt)
+		end
+	end
+
+	if redX > images.windowWidth - 30 then
+		redX = images.windowWidth - 30
+		if love.keyboard.isDown("d") then
+			iceSkating.moveMap(0.2 * tileSize * dt, 0)
+		end
+	end
+
 end
 
 function iceSkating.draw()
 
 	love.graphics.draw(tilesetBatch, math.floor(-zoomX*(mapX%1)*tileSize), math.floor(-zoomY*(mapY%1)*tileSize), 0, zoomX, zoomY)
-	love.graphics.draw(images.redEskimo,redX,redY)
+	love.graphics.draw(images.redEskimoIce,redX,redY)
 
 end
 
@@ -179,7 +203,7 @@ end
 function UPDATE_ICESKATING(dt)
 
 	iceSkating.update(dt)
-	iceSkating.characterPhysics()
+	iceSkating.characterPhysics(dt)
 
 end
 

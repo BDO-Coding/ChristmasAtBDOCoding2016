@@ -31,7 +31,7 @@ function snowballFight.draw()
 	if developerMode == true then --Shows hitboxes
 		images.showhitbox(redX+10, redY+12, 42, 52)
 	end
-	love.graphics.draw(images.redEskimo,redX,redY)
+	love.graphics.draw(images.redEskimoFight,redX,redY)
 
 end
 
