@@ -14,6 +14,7 @@ function images.load ()
 	images.snowman = love.graphics.newImage("images/snowman.png")
 	images.title = love.graphics.newImage("images/title.png")
 	images.barricade = love.graphics.newImage("images/barricade.png")
+	images.pointer = love.graphics.newImage("images/pointer.png")
 
 end
 

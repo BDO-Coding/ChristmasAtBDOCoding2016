@@ -10,6 +10,8 @@ function snowballFight.load ()
 	snowballMaxSpeed = 50 -- in km/hour
 	airFriction = 0.02 -- -airFrictionPerTick
 	redX,redY,redXMomentum,redYMomentum = 1,1,0,0
+	blueX,blueY,blueXMomentum,blueYMomentum = 1,1,0,0
+
 	snowballArray = {{}}
 	barricadeArray = {{}}
 
@@ -35,12 +37,18 @@ function snowballFight.draw()
 	end
 	if developerMode == true then --Shows hitboxes
 		images.showhitbox(redX+10, redY+12, 42, 52)
+		images.showhitbox(blueX+10, blueY+12, 42, 52)
 	end
-	love.graphics.draw(images.redEskimoFight,redX,redY)
+
 
 	for i=1, 3 do
 		love.graphics.draw(images.barricade,barricadeArray[i][1],barricadeArray[i][2])
+		if developerMode == true then
+			images.showhitbox(barricadeArray[i][1]+24, barricadeArray[i][2], 20, 60)
+		end
 	end
+		love.graphics.draw(images.redEskimoFight,redX,redY)
+		love.graphics.draw(images.blueEskimoFight,blueX,blueY)
 
 end
 
@@ -85,6 +93,15 @@ function snowballPhysics()
 			if snowballArray[i][2]>images.windowHeight or snowballArray[i][2] < 1 then
 				bounceSnowball(i,"y")
 			end
+
+			for a=1, 3 do
+				if snowballArray[i][1]>barricadeArray[a][1]+24 and snowballArray[i][1] < barricadeArray[a][1]+44 then
+					if snowballArray[i][2]>barricadeArray[a][2] and snowballArray[i][2] < barricadeArray[a][2]+60 then
+						bounceSnowball(i,"x")
+					end
+				end
+			end
+
 
 			--KILL STOPPED SNOWBALLS
 
@@ -149,6 +166,28 @@ function characterMovement()
 		redXMomentum = redXMomentum + redVelocity
 	end
 
+
+	blueVelocity = 0.022
+
+	if love.keyboard.isDown("lctrl") then
+		blueVelocity = 0.025
+	end
+
+	if love.keyboard.isDown("up") == true then
+		blueYMomentum = blueYMomentum - blueVelocity
+	end
+
+	if love.keyboard.isDown("down") == true then
+		blueYMomentum = blueYMomentum + blueVelocity
+	end
+
+	if love.keyboard.isDown("left") == true then
+		blueXMomentum = blueXMomentum - blueVelocity
+	end
+
+	if love.keyboard.isDown("right") == true then
+		blueXMomentum = blueXMomentum + blueVelocity
+	end
 end
 
 function characterPhysics()
@@ -184,6 +223,38 @@ function characterPhysics()
 		end
 	end
 
+	blueY,blueX = blueY + blueYMomentum, blueX + blueXMomentum
+
+	if blueYMomentum > 0 then
+		blueYMomentum = blueYMomentum - airFriction
+	end
+
+	if blueXMomentum > 0 then
+		blueXMomentum = blueXMomentum - airFriction
+	end
+
+	if blueYMomentum < 0 then
+		blueYMomentum = blueYMomentum + airFriction
+	end
+	
+	if blueXMomentum < 0 then
+		blueXMomentum = blueXMomentum + airFriction
+	end
+
+	for i = 1, snowballNum do
+		if snowballArray[i][9] == true then
+			if blueX < snowballArray[i][1]-10 and blueX > snowballArray[i][1]-40 and blueY > snowballArray[i][2]-73 and blueY < snowballArray[i][2]+16 then
+				if snowballArray[i][10] ~= 0 then
+					snowballArray[i][9] = false
+				else
+					bounceSnowball(i,"x")
+					bounceSnowball(i,"y")
+				end
+			end
+		end
+	end
+
+
 end
 
 function UPDATE_SNOWBALLFIGHT(dt)
@@ -192,7 +263,7 @@ function UPDATE_SNOWBALLFIGHT(dt)
 	snowballPhysics()
 	characterMovement()
 	if love.mouse.isDown(1) == true then
-		addSnowball(1,1,1,1,math.random(10,50),math.random(10,50))
+		addSnowball(1,1,1,1,math.random(10,100),math.random(10,100))
 	end
 
 end
