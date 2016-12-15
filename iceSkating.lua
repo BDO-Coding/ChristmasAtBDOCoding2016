@@ -27,6 +27,15 @@ end
 
 function iceSkating.update(dt)
 
+	currentTile = map[(math.floor(mapX+0.5))+9][(math.floor(mapY+0.5))+5]
+
+	for x=1,mapWidth do
+		for y=1,mapHeight do
+				
+			end
+		end
+	end
+
 	redVelocity = 0.022
 
 	if love.keyboard.isDown("lctrl") then
@@ -51,14 +60,22 @@ function iceSkating.update(dt)
 
 end
 
-function iceSkating.hitbox(x1,x2,y1,y2,value)
+function iceSkating.hitbox(x1,x2,y1,y2)
 
-	if value == "in" then
-		if redX < x1 then
-			--TODO
-		end
-	else
+	if redX > x1 then
+		redX = x1
+	end
 
+	if redX < x2 then
+		redX = x2
+	end
+
+	if redY > y1 then
+		redY = y1
+	end
+
+	if redY < y2 then
+		redY = y2
 	end
 
 end
