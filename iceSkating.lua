@@ -19,25 +19,24 @@ function iceSkating.load()
 	iceSkating.setupMapView()
 	iceSkating.setupTileset()
 
+	createRockArray = true
 	airFriction = 0.02 -- -airFrictionPerTick
 	redX,redY,redXMomentum,redYMomentum = 1,1,0,0
 	blueX,blueY,blueXMomentum,blueYMomentum = 1,1,0,0
 
 end
 
-function iceSkating.hitbox(x1,x2,y1,y2,eff)
+function iceSkating.hitbox(x,y,sizex,sizey)
 
-	if redX > x1 and redX < x2 and redY > y1 and redY < y2 then
-		if eff == "stop" then
-			if redDirect == "left" then
-				redX = x2
-			elseif redDirect == "right" then
-				redX = x1
-			elseif redDirect == "up" then
-				redY = y2
-			elseif redDirect == "down" then
-				redY = y1
-			end
+	if redX > x-60 and redX < x+sizex and redY > y-60 and redY < y+sizey then
+		if redDirect == "left" then
+			redX = x+sizex
+		elseif redDirect == "right" then
+			redX = x-60
+		elseif redDirect == "up" then
+			redY = y+sizey
+		elseif redDirect == "down" then
+			redY = y-60
 		end
 	end
 
@@ -111,10 +110,6 @@ function iceSkating.setupMap()
 			else
 				map[x][y] = 0
 			end
-			createSnow = love.math.random(1, 200)
-			if createSnow == 1 then
-				map[x][y] = 0
-			end
 		end
 	end
 
@@ -173,18 +168,24 @@ function iceSkating.moveMap(dx, dy)
 
 end
 
-function iceSkating.update(dt)
+function iceSkating.rock()
 
-	for x=1, mapWidth do
-		for y=0, mapHeight do
-			if map[x][y] == 0 then
-				print((math.floor((x)*-64)))
-				--iceSkating.hitbox(,,200,300,"stop")
-			end
+	if createRockArray == true then
+		rockArray = {{}}
+		rockArray[1] = {love.math.random(100, 2000), love.math.random(100, 2000)}
+		for i=1, 30 do
+			rockArray[#rockArray + 1] = {love.math.random(100, 2000), love.math.random(100, 2000)}
+		end
+		createRockArray = false
+	else
+		for i=1, 30 do
+			iceSkating.hitbox(math.floor((mapX)*-64)+rockArray[i][1], math.floor((mapY)*-64)+rockArray[i][2], 100, 100)
 		end
 	end
 
-	currentTile = map[(math.floor(mapX+0.5))+9][(math.floor(mapY+0.5))+5]
+end
+
+function iceSkating.update(dt)
 
 	redVelocity = 0.022
 
@@ -214,6 +215,11 @@ function iceSkating.draw()
 
 	love.graphics.draw(tilesetBatch, math.floor(-zoomX*(mapX%1)*tileSize), math.floor(-zoomY*(mapY%1)*tileSize), 0, zoomX, zoomY)
 	love.graphics.draw(images.redEskimoIce,redX,redY)
+	if createRockArray == false then
+		for i=1, 30 do
+			images.showhitbox(math.floor((mapX)*-64)+rockArray[i][1], math.floor((mapY)*-64)+rockArray[i][2], 100, 100)
+		end
+	end
 
 end
 
@@ -221,6 +227,7 @@ function UPDATE_ICESKATING(dt)
 
 	iceSkating.update(dt)
 	iceSkating.characterPhysics(dt)
+	iceSkating.rock()
 
 end
 
