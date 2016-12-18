@@ -166,6 +166,10 @@ function characterMovement()
 		redXMomentum = redXMomentum + redVelocity
 	end
 
+	if love.keyboard.isDown("e") == true then
+		redXMomentum = redXMomentum + redVelocity
+	end
+
 
 	blueVelocity = 0.022
 
@@ -188,6 +192,11 @@ function characterMovement()
 	if love.keyboard.isDown("right") == true then
 		blueXMomentum = blueXMomentum + blueVelocity
 	end
+
+	if love.keyboard.isDown("return") == true then
+		blueXMomentum = blueXMomentum + blueVelocity
+	end
+
 end
 
 function characterPhysics()
