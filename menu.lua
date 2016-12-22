@@ -1,7 +1,6 @@
 menu = {}
 require "snowballFight"
 require "iceSkating"
-require "buildASnowman"
 local map -- stores tiledata
 local mapWidth, mapHeight -- width and height in tiles
  
@@ -85,18 +84,21 @@ function menu.draw()
             love.graphics.rectangle("fill", 170, 280, 220, 60)
         end
 
-        if mouseX > 170 and mouseX < 390 and mouseY > 380 and mouseY < 440 then -- Credits, Build a Snowman
+        if playgame == false and mouseX > 170 and mouseX < 390 and mouseY > 380 and mouseY < 440 then -- Credits
             love.graphics.setColor(59, 70, 219)
             love.graphics.rectangle("fill", 170, 380, 220, 60)
-        else
+            love.graphics.setColor(0, 0, 0)
+            love.graphics.rectangle("line", 170, 380, 220, 60)
+        elseif playgame == false then
             love.graphics.setColor(126, 204, 230)
             love.graphics.rectangle("fill", 170, 380, 220, 60)
+            love.graphics.setColor(0, 0, 0)
+            love.graphics.rectangle("line", 170, 380, 220, 60)
         end
 
         love.graphics.setColor(0, 0, 0)
         love.graphics.rectangle("line", 170, 180, 220, 60)
         love.graphics.rectangle("line", 170, 280, 220, 60)
-        love.graphics.rectangle("line", 170, 380, 220, 60)
 
         if playgame == false then
 	        love.graphics.print("Play Game", 218, 190, 0, 2, 3)
@@ -152,7 +154,6 @@ function menu.draw()
         love.graphics.setColor(0,0,0)
 		love.graphics.print("Snowball Fight", 193, 190, 0, 2, 3)
 		love.graphics.print("Ice Skating", 213, 290, 0, 2, 3)
-		love.graphics.print("Build a Snowman", 174, 390, 0, 2, 3)
         if mouseX > 170 and mouseX < 390 and mouseY > 600 and mouseY < 660 then -- Back
             love.graphics.setColor(59, 70, 219)
             love.graphics.rectangle("fill", 170, 600, 220, 60)
@@ -384,14 +385,6 @@ function love.mousepressed(x, y, button, istouch)
             	inmenu = false
                 ingame = 2
                 iceSkating.load()
-                clickDelay = 0.5
-            end
-
-            if button == 1 and x > 170 and x < 390 and y > 380 and y < 440 and playgame == true and clickDelay < 0 then
-                playgame = false
-            	inmenu = false
-                ingame = 3
-                snowballFight.load()
                 clickDelay = 0.5
             end
 

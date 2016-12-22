@@ -1,5 +1,6 @@
 iceSkating={}
 require "images"
+require "helper"
 local map -- stores tiledata
 local mapWidth, mapHeight -- width and height in tiles
  

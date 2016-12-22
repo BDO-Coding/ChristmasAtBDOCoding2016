@@ -1,11 +1,12 @@
 require "menu"
 require "images"
+require "helper"
 require "snowballFight"
 require "iceSkating"
-require "buildASnowman"
 
 function love.load()
 
+	helper.load(doImageCropping)
 	love.mouse.setVisible(true)
 	ingame = 0
 	inmenu = true
@@ -27,8 +28,6 @@ function love.update(dt)
 		UPDATE_SNOWBALLFIGHT(dt)
 	elseif ingame == 2 then
 		UPDATE_ICESKATING(dt)
-	elseif ingame == 3 then
-		UPDATE_BUILDASNOWMAN(dt)
 	end
 	
 	UPDATE_IMAGES()
@@ -44,8 +43,6 @@ function love.draw()
 		DRAW_SNOWBALLFIGHT()
 	elseif ingame == 2 then
 		DRAW_ICESKATING()
-	elseif ingame == 3 then
-		DRAW_BUILDASNOWMAN()
 	end
 	
 	DRAW_MENU()
