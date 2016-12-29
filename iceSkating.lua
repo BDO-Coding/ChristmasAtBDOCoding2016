@@ -24,21 +24,17 @@ function iceSkating.load()
 	airFriction = 0.02 -- -airFrictionPerTick
 	redX,redY,redXMomentum,redYMomentum = 1,1,0,0
 	blueX,blueY,blueXMomentum,blueYMomentum = 1,1,0,0
+	redVelocity = 0.022
+	rockAmount = 30
 
 end
 
 function iceSkating.hitbox(x,y,sizex,sizey)
 
 	if redX > x-60 and redX < x+sizex and redY > y-60 and redY < y+sizey then
-		if redDirect == "left" then
-			redX = x+sizex
-		elseif redDirect == "right" then
-			redX = x-60
-		elseif redDirect == "up" then
-			redY = y+sizey
-		elseif redDirect == "down" then
-			redY = y-60
-		end
+		return true
+	else
+		return false
 	end
 
 end
@@ -61,13 +57,6 @@ function iceSkating.characterPhysics(dt)
 	
 	if redXMomentum < 0 then
 		redXMomentum = redXMomentum + airFriction
-	end
-
-	if redY < -30 then
-		redY = -30
-		if love.keyboard.isDown("w") then
-			iceSkating.moveMap(0, -0.2 * tileSize * dt)
-		end
 	end
 
 	if redX < -30 then
@@ -173,14 +162,18 @@ function iceSkating.rock()
 
 	if createRockArray == true then
 		rockArray = {{}}
-		rockArray[1] = {love.math.random(100, 2000), love.math.random(100, 2000)}
-		for i=1, 30 do
-			rockArray[#rockArray + 1] = {love.math.random(100, 2000), love.math.random(100, 2000)}
+		rockArray[1] = {love.math.random(100, 2000), love.math.random(100, 2000), false}
+		for i=1, rockAmount do
+			rockArray[#rockArray + 1] = {love.math.random(100, 2000), love.math.random(100, 2000), false}
 		end
 		createRockArray = false
 	else
-		for i=1, 30 do
-			iceSkating.hitbox(math.floor((mapX)*-64)+rockArray[i][1], math.floor((mapY)*-64)+rockArray[i][2], 100, 100)
+		for i=1, rockAmount do
+			if iceSkating.hitbox(math.floor((mapX)*-64)+rockArray[i][1], math.floor((mapY)*-64)+rockArray[i][2], 100, 100) == true then
+				rockArray[i][3] = true
+			else
+				rockArray[i][3] = false
+			end
 		end
 	end
 
@@ -188,26 +181,30 @@ end
 
 function iceSkating.update(dt)
 
-	redVelocity = 0.022
+	if createRockArray == false then
+		for i = 1, rockAmount do
+			if rockArray[i][3] == true then
+				redMove = false
+			end
+		end
+		if redMove == true then
+			if love.keyboard.isDown("w") then
+				redYMomentum = redYMomentum - redVelocity
+			end
 
-	if love.keyboard.isDown("w") == true then
-		redYMomentum = redYMomentum - redVelocity
-		redDirect = "up"
-	end
+			if love.keyboard.isDown("s") then
+				redYMomentum = redYMomentum + redVelocity
+			end
 
-	if love.keyboard.isDown("s") == true then
-		redYMomentum = redYMomentum + redVelocity
-		redDirect = "down"
-	end
+			if love.keyboard.isDown("a") then
+				redXMomentum = redXMomentum - redVelocity
+			end
 
-	if love.keyboard.isDown("a") == true then
-		redXMomentum = redXMomentum - redVelocity
-		redDirect = "left"
-	end
-
-	if love.keyboard.isDown("d") == true then
-		redXMomentum = redXMomentum + redVelocity
-		redDirect = "right"
+			if love.keyboard.isDown("d") then
+				redXMomentum = redXMomentum + redVelocity
+			end
+		end
+		redMove = true
 	end
 
 end
