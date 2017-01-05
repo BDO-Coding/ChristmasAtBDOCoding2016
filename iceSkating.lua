@@ -25,13 +25,24 @@ function iceSkating.load()
 	redX,redY,redXMomentum,redYMomentum = 1,1,0,0
 	blueX,blueY,blueXMomentum,blueYMomentum = 1,1,0,0
 	redVelocity = 0.022
+	blueVelocity = 0.022
 	rockAmount = 30
 
 end
 
-function iceSkating.hitbox(x,y,sizex,sizey)
+function iceSkating.redHitbox(x,y,sizex,sizey)
 
 	if redX > x-60 and redX < x+sizex and redY > y-60 and redY < y+sizey then
+		return true
+	else
+		return false
+	end
+
+end
+
+function iceSkating.blueHitbox(x,y,sizex,sizey)
+
+	if blueX > x-60 and blueX < x+sizex and blueY > y-60 and blueY < y+sizey then
 		return true
 	else
 		return false
@@ -76,6 +87,45 @@ function iceSkating.characterPhysics(dt)
 	if redX > images.windowWidth - 30 then
 		redX = images.windowWidth - 30
 		if love.keyboard.isDown("d") then
+			iceSkating.moveMap(0.2 * tileSize * dt, 0)
+		end
+	end
+
+	blueY,blueX = blueY + blueYMomentum, blueX + blueXMomentum
+
+	if blueYMomentum > 0 then
+		blueYMomentum = blueYMomentum - airFriction
+	end
+
+	if blueXMomentum > 0 then
+		blueXMomentum = blueXMomentum - airFriction
+	end
+
+	if blueYMomentum < 0 then
+		blueYMomentum = blueYMomentum + airFriction
+	end
+	
+	if blueXMomentum < 0 then
+		blueXMomentum = blueXMomentum + airFriction
+	end
+
+	if blueX < -30 then
+		blueX = -30
+		if love.keyboard.isDown("left") then
+			iceSkating.moveMap(-0.2 * tileSize * dt, 0)
+		end
+	end
+
+	if blueY > images.windowHeight - 30 then
+		blueY = images.windowHeight - 30
+		if love.keyboard.isDown("down") then
+			iceSkating.moveMap(0, 0.2 * tileSize * dt)
+		end
+	end
+
+	if blueX > images.windowWidth - 30 then
+		blueX = images.windowWidth - 30
+		if love.keyboard.isDown("right") then
 			iceSkating.moveMap(0.2 * tileSize * dt, 0)
 		end
 	end
@@ -169,7 +219,12 @@ function iceSkating.rock()
 		createRockArray = false
 	else
 		for i=1, rockAmount do
-			if iceSkating.hitbox(math.floor((mapX)*-64)+rockArray[i][1], math.floor((mapY)*-64)+rockArray[i][2], 100, 100) == true then
+			if iceSkating.redHitbox(math.floor((mapX)*-64)+rockArray[i][1], math.floor((mapY)*-64)+rockArray[i][2], 100, 100) == true then
+				rockArray[i][3] = true
+			else
+				rockArray[i][3] = false
+			end
+			if iceSkating.blueHitbox(math.floor((mapX)*-64)+rockArray[i][1], math.floor((mapY)*-64)+rockArray[i][2], 100, 100) == true then
 				rockArray[i][3] = true
 			else
 				rockArray[i][3] = false
@@ -204,6 +259,24 @@ function iceSkating.update(dt)
 				redXMomentum = redXMomentum + redVelocity
 			end
 		end
+		if blueMove == true then
+			if love.keyboard.isDown("up") then
+				blueYMomentum = blueYMomentum - blueVelocity
+			end
+
+			if love.keyboard.isDown("down") then
+				blueYMomentum = blueYMomentum + blueVelocity
+			end
+
+			if love.keyboard.isDown("left") then
+				blueXMomentum = blueXMomentum - blueVelocity
+			end
+
+			if love.keyboard.isDown("right") then
+				blueXMomentum = blueXMomentum + blueVelocity
+			end
+		end
+		blueMove = true
 		redMove = true
 	end
 
@@ -213,9 +286,10 @@ function iceSkating.draw()
 
 	love.graphics.draw(tilesetBatch, math.floor(-zoomX*(mapX%1)*tileSize), math.floor(-zoomY*(mapY%1)*tileSize), 0, zoomX, zoomY)
 	love.graphics.draw(images.redEskimoIce,redX,redY)
+	love.graphics.draw(images.blueEskimoIce,blueX,blueY)
 	if createRockArray == false then
 		for i=1, 30 do
-			images.showhitbox(math.floor((mapX)*-64)+rockArray[i][1], math.floor((mapY)*-64)+rockArray[i][2], 100, 100)
+			love.graphics.draw(images.rock,math.floor((mapX)*-64)+rockArray[i][1], math.floor((mapY)*-64)+rockArray[i][2], 0, 1.6, 1.6)
 		end
 	end
 

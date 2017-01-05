@@ -5,6 +5,7 @@ function images.load ()
 	images.windowWidth,images.windowHeight = love.graphics.getDimensions()
 
 	images.snowball = love.graphics.newImage("images/snowball.png")
+	images.rock = love.graphics.newImage("images/rock.png")
 	images.redEskimoFight = love.graphics.newImage("images/redEskimoFight.png")
 	images.redEskimoSnow = love.graphics.newImage("images/redEskimoSnowman.png")
 	images.redEskimoIce = love.graphics.newImage("images/redEskimoIce.png")
