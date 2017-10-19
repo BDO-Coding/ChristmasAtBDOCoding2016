@@ -74,6 +74,7 @@ function iceSkating.characterPhysics(dt)
 		redX = -30
 		if love.keyboard.isDown("a") then
 			iceSkating.moveMap(-0.2 * tileSize * dt, 0)
+			blueXMomentum = blueXMomentum + blueVelocity
 		end
 	end
 
@@ -81,6 +82,7 @@ function iceSkating.characterPhysics(dt)
 		redY = images.windowHeight - 30
 		if love.keyboard.isDown("s") then
 			iceSkating.moveMap(0, 0.2 * tileSize * dt)
+			blueYMomentum = blueYMomentum - blueVelocity
 		end
 	end
 
@@ -88,6 +90,7 @@ function iceSkating.characterPhysics(dt)
 		redX = images.windowWidth - 30
 		if love.keyboard.isDown("d") then
 			iceSkating.moveMap(0.2 * tileSize * dt, 0)
+			blueXMomentum = blueXMomentum - blueVelocity
 		end
 	end
 
@@ -113,6 +116,7 @@ function iceSkating.characterPhysics(dt)
 		blueX = -30
 		if love.keyboard.isDown("left") then
 			iceSkating.moveMap(-0.2 * tileSize * dt, 0)
+			redXMomentum = redXMomentum + redVelocity
 		end
 	end
 
@@ -120,6 +124,7 @@ function iceSkating.characterPhysics(dt)
 		blueY = images.windowHeight - 30
 		if love.keyboard.isDown("down") then
 			iceSkating.moveMap(0, 0.2 * tileSize * dt)
+			redYMomentum = redYMomentum - redVelocity
 		end
 	end
 
@@ -127,6 +132,7 @@ function iceSkating.characterPhysics(dt)
 		blueX = images.windowWidth - 30
 		if love.keyboard.isDown("right") then
 			iceSkating.moveMap(0.2 * tileSize * dt, 0)
+			redXMomentum = redXMomentum - redVelocity
 		end
 	end
 
