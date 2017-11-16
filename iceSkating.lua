@@ -192,7 +192,7 @@ end
  
 function iceSkating.updateTilesetBatch()
 
-	tilesetBatch:clear()
+	tilesetBatch:clear() 
 	for x=0, tilesDisplayWidth-1 do
 		for y=0, tilesDisplayHeight-1 do
 			tilesetBatch:add(tileQuads[map[x+math.floor(mapX)][y+math.floor(mapY)]], x*tileSize, y*tileSize)
