@@ -150,23 +150,19 @@ function characterMovement()
 		redVelocity = 0.025
 	end
 
-	if love.keyboard.isDown("w") == true then
+	if love.keyboard.isDown("e") == true then
 		redYMomentum = redYMomentum - redVelocity
 	end
 
-	if love.keyboard.isDown("s") == true then
+	if love.keyboard.isDown("d") == true then
 		redYMomentum = redYMomentum + redVelocity
 	end
 
-	if love.keyboard.isDown("a") == true then
+	if love.keyboard.isDown("s") == true then
 		redXMomentum = redXMomentum - redVelocity
 	end
 
-	if love.keyboard.isDown("d") == true then
-		redXMomentum = redXMomentum + redVelocity
-	end
-
-	if love.keyboard.isDown("e") == true then
+	if love.keyboard.isDown("f") == true then
 		redXMomentum = redXMomentum + redVelocity
 	end
 
@@ -280,5 +276,17 @@ end
 function DRAW_SNOWBALLFIGHT()
 
 	snowballFight.draw()
+
+end
+
+function love.keypressed(key)
+
+	if key == "q" then
+		addSnowball(redX,redY,1,1,-100,0)
+	end
+
+	if key == "m" then
+		addSnowball(blueX,blueY,1,1,100,0)
+	end
 
 end
